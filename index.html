@@ -1,332 +1,192 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casamento de Ronaldo & Vitória</title>
     
-    <!-- Meta tags para compartilhamento (Open Graph) -->
-    <meta property="og:title" content="Casamento de Ronaldo & Vitória">
-    <meta property="og:description" content="Temos a honra de convidar você e sua família para celebrar nossa união.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80">
-
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (via CDN para simplicidade e performance) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel para JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Ícones Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'script': ['"Great Vibes"', 'cursive'],
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'body': ['"Lato"', 'sans-serif'],
+                    },
+                    colors: {
+                        'gold-accent': '#D4AF37',
+                        'soft-pink': '#FDF2F8',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        /* Personalizações UI/UX */
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #fdfbf7;
-            color: #4a4a4a;
-            overflow-x: hidden;
+        /* Estilos personalizados para garantir beleza e legibilidade */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
         
-        .font-cursive {
-            font-family: 'Great Vibes', cursive;
-        }
-        
-        .font-serif-title {
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Animação suave de entrada */
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Efeito Parallax suave */
-        .parallax-bg {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
+        .section-bg {
             background-size: cover;
+            background-position: center;
+            background-attachment: scroll; /* Scroll no mobile é mais performático que fixed */
         }
 
-        /* Decorações florais flutuantes */
-        .flower-decor {
-            position: absolute;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-            transition: transform 0.3s ease;
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Glassmorphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-        }
-
-        /* Botão Dourado */
-        .btn-gold {
-            background: linear-gradient(45deg, #d4af37, #c5a028);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-gold:active {
-            transform: scale(0.95);
-        }
-
-        /* Ajustes Mobile específicos */
-        @media (max-width: 768px) {
-            .parallax-bg {
-                background-attachment: scroll; /* Melhor performance no mobile */
-            }
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="bg-gray-50 text-gray-800 font-body antialiased overflow-x-hidden">
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <!-- Seção 1: Capa (Casal) -->
+    <section class="relative min-h-screen flex items-center justify-center text-center px-4 section-bg" 
+             style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-black/40"></div> <!-- Máscara escura para legibilidade -->
+        
+        <div class="relative z-10 animate-fade-in-up">
+            <p class="text-white text-lg tracking-widest uppercase mb-2 font-serif">Vamos nos casar</p>
+            <h1 class="text-6xl md:text-8xl font-script text-white mb-4 animate-float">
+                Ronaldo <span class="text-gold-accent">&</span> Vitória
+            </h1>
+            <div class="w-24 h-1 bg-gold-accent mx-auto mb-6 rounded-full"></div>
+            <p class="text-white text-xl font-serif italic max-w-md mx-auto">
+                "O amor tudo sofre, tudo crê, tudo espera, tudo suporta."
+            </p>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 text-center animate-bounce text-white">
+            <i data-lucide="chevron-down" class="mx-auto w-8 h-8"></i>
+        </div>
+    </section>
 
-        // Ícones SVG simples para decoração
-        const RingsIcon = () => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-4 opacity-80">
-                <circle cx="8" cy="15" r="7" />
-                <circle cx="16" cy="9" r="7" />
+    <!-- Seção 2: Convite aos Pais (Flores) -->
+    <section class="py-20 px-6 relative bg-soft-pink">
+        <div class="absolute top-0 left-0 w-32 h-32 opacity-20 pointer-events-none">
+            <!-- SVG Decorativo de Flor -->
+            <svg viewBox="0 0 100 100" fill="currentColor" class="text-pink-400">
+                <path d="M50 0 C20 0 20 30 50 50 C80 30 80 0 50 0 Z M50 100 C20 100 20 70 50 50 C80 70 80 100 50 100 Z M0 50 C0 20 30 20 50 50 C30 80 0 80 0 50 Z M100 50 C100 20 70 20 50 50 C70 80 100 80 100 50 Z" />
             </svg>
-        );
+        </div>
 
-        const FlowerDivider = () => (
-            <div className="flex justify-center items-center my-6 opacity-60">
-                <span className="text-[#d4af37] text-2xl">❀</span>
-                <div className="h-[1px] w-16 bg-[#d4af37] mx-2"></div>
-                <span className="text-[#d4af37] text-2xl">❀</span>
-            </div>
-        );
-
-        const App = () => {
-            const [showContactModal, setShowContactModal] = useState(false);
-            const [isVisible, setIsVisible] = useState(false);
-
-            useEffect(() => {
-                setIsVisible(true);
-            }, []);
-
-            // Função para lidar com o clique do WhatsApp
-            const handleWhatsappClick = (type) => {
-                // Como não temos números reais, colocamos um placeholder ou deixamos genérico
-                // Normalmente seria: window.open(`https://wa.me/55NUMERO?text=${msg}`, '_blank');
-                const msg = encodeURIComponent(" Queridos noivos, Recebi o convite para o seu casamento e, com grande satisfação e alegria, confirmo a minha presença. Agradeço a consideração e a oportunidade de celebrar este momento sublime em suas vidas. Estarei presente para testemunhar essa união abençoada!");
+        <div class="max-w-md mx-auto text-center relative z-10">
+            <div class="bg-white p-8 rounded-lg shadow-xl border-t-4 border-gold-accent">
+                <h2 class="text-3xl font-script text-gray-800 mb-6">Com a bênção de nossos pais</h2>
                 
-                // Exemplo de link genérico para abrir o app
-                // Na prática, você substituiria os '000000000' pelos números reais
-                let number = ""; 
-                if (type === 'groom') number = ""; // Coloque o número do Ronaldo aqui se quiser
-                else number = ""; // Coloque o número da Vitória aqui se quiser
-
-                if(number) {
-                    window.open(`https://wa.me/${number}?text=${msg}`, '_blank');
-                } else {
-                    // Fallback se não tiver número configurado no código
-                    window.open(`https://wa.me/?text=${msg}`, '_blank');
-                }
-                setShowContactModal(false);
-            };
-
-            return (
-                <div className="min-h-screen relative pb-20">
-                    
-                    {/* --- CAPA / HERO --- */}
-                    <header className="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
-                        {/* Imagem de Fundo (Casal) */}
-                        <div 
-                            className="absolute inset-0 bg-cover bg-center z-0"
-                            style={{ 
-                                backgroundImage: "url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80')",
-                            }}
-                        ></div>
-                        {/* Overlay Escuro Suave */}
-                        <div className="absolute inset-0 bg-black/40 z-0"></div>
-
-                        {/* Conteúdo */}
-                        <div className={`relative z-10 text-white ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
-                            <p className="font-serif-title uppercase tracking-widest text-sm mb-4">Vamos nos casar</p>
-                            <h1 className="font-cursive text-6xl md:text-8xl mb-2 text-[#f3e5ab]">Ronaldo</h1>
-                            <span className="font-serif-title text-2xl mx-2">&</span>
-                            <h1 className="font-cursive text-6xl md:text-8xl mb-8 text-[#f3e5ab]">Vitória</h1>
-                            
-                            <div className="w-full max-w-xs h-[1px] bg-white/50 mx-auto my-6"></div>
-                            
-                            <p className="text-lg font-light italic">Dezembro</p>
-                            
-                            <div className="absolute bottom-10 left-0 right-0 animate-bounce">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                </svg>
-                            </div>
-                        </div>
-                    </header>
-
-                    {/* --- CONVITE E PAIS --- */}
-                    <section className="relative py-16 px-6 max-w-2xl mx-auto text-center">
-                        {/* Imagem de Fundo Decorativa (Flores) */}
-                        <img 
-                            src="https://images.unsplash.com/photo-1507599023405-b045e0569762?auto=format&fit=crop&q=80" 
-                            className="absolute top-0 right-0 w-48 opacity-10 -z-10 rotate-180" 
-                            alt="flores"
-                        />
-                         <img 
-                            src="https://images.unsplash.com/photo-1507599023405-b045e0569762?auto=format&fit=crop&q=80" 
-                            className="absolute bottom-0 left-0 w-48 opacity-10 -z-10" 
-                            alt="flores"
-                        />
-
-                        <div className="glass-card p-8 rounded-xl shadow-xl border-t-4 border-[#d4af37]">
-                            <RingsIcon />
-                            <p className="text-gray-600 mb-6 italic text-lg leading-relaxed">
-                                "O amor é paciente, o amor é bondoso. Tudo sofre, tudo crê, tudo espera, tudo suporta." <br/>
-                                <span className="text-sm text-[#d4af37]">— 1 Coríntios 13</span>
-                            </p>
-
-                            <p className="text-gray-800 font-light mb-8 text-lg">
-                                Com a bênção de Deus e a alegria de nossos corações, temos a honra de convidar você e sua família para celebrar o início da nossa nova vida juntos.
-                            </p>
-
-                            <FlowerDivider />
-
-                            <div className="grid gap-8 md:grid-cols-2 mt-8">
-                                <div>
-                                    <p className="text-xs uppercase tracking-widest text-[#d4af37] mb-2 font-bold">Pais do Noivo</p>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">Natividade Pereira de Araújo</h3>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">&</h3>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">Maria Barros de Araújo</h3>
-                                </div>
-                                <div>
-                                    <p className="text-xs uppercase tracking-widest text-[#d4af37] mb-2 font-bold">Pais da Noiva</p>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">Reilson Barbosa Santos</h3>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">&</h3>
-                                    <h3 className="font-serif-title text-gray-800 text-lg">Vânia Nunes de Araújo Pereira</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* --- DETALHES DA CERIMÔNIA (O AVISO) --- */}
-                    <section className="relative py-16 bg-[#f7f2ed]">
-                         <div 
-                            className="absolute inset-0 z-0 opacity-5"
-                            style={{ 
-                                backgroundImage: "url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80')", // Alianças fundo
-                                backgroundSize: 'cover'
-                            }}
-                        ></div>
-
-                        <div className="relative z-10 max-w-lg mx-auto px-6 text-center">
-                            <h2 className="font-cursive text-5xl text-[#d4af37] mb-6">A Cerimônia</h2>
-                            
-                            <div className="bg-white p-8 rounded-lg shadow-lg">
-                                <div className="mb-6">
-                                    <div className="inline-block p-3 rounded-full bg-[#fdfbf7] mb-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#d4af37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-2xl font-serif-title mb-2">Dezembro</h3>
-                                    <p className="text-gray-500 text-sm">Previsão para 2025</p>
-                                </div>
-
-                                <div className="space-y-4 text-left bg-orange-50 p-4 rounded border-l-4 border-[#d4af37]">
-                                    <p className="text-sm text-gray-700 leading-relaxed">
-                                        <strong>Nota Importante:</strong> O convite oficial, contendo a data exata (dia e hora), o endereço da Igreja e da recepção, será enviado em breve.
-                                    </p>
-                                    <p className="text-sm text-gray-700 leading-relaxed">
-                                        Qualquer mudança na programação será avisada com antecedência a todos os convidados.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* --- WHATSAPP CTA --- */}
-                    <section className="py-12 text-center px-4">
-                        <p className="mb-6 text-gray-600">Dúvidas ou deseja falar conosco?</p>
-                        <button 
-                            onClick={() => setShowContactModal(true)}
-                            className="btn-gold px-8 py-4 rounded-full font-bold uppercase tracking-wider shadow-lg flex items-center justify-center mx-auto gap-2"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle-heart"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M15.8 9.2a2.5 2.5 0 0 0-3.5 0l-.55.55-.55-.55a2.5 2.5 0 1 0-3.5 3.5l.55.55 3.5 3.5 3.5-3.5.55-.55a2.5 2.5 0 0 0 0-3.5Z"/></svg>
-                            Entrar em Contato
-                        </button>
-                    </section>
-
-                    {/* --- RODAPÉ --- */}
-                    <footer className="bg-[#4a4a4a] text-white py-8 text-center">
-                        <h2 className="font-cursive text-3xl mb-2 text-[#d4af37]">Ronaldo & Vitória</h2>
-                        <p className="text-xs text-gray-400">Feito com amor.</p>
-                    </footer>
-
-                    {/* --- MODAL WHATSAPP --- */}
-                    {showContactModal && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-                            <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm relative">
-                                <button 
-                                    onClick={() => setShowContactModal(false)}
-                                    className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                                
-                                <h3 className="font-serif-title text-xl text-center mb-6 text-[#d4af37]">Escolha o Contato</h3>
-                                
-                                <div className="space-y-3">
-                                    <button 
-                                        onClick={() => handleWhatsappClick('groom')}
-                                        className="w-full py-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors flex items-center justify-center gap-3 text-gray-700"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                        Falar com o Noivo (Ronaldo)
-                                    </button>
-                                    <button 
-                                        onClick={() => handleWhatsappClick('bride')}
-                                        className="w-full py-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors flex items-center justify-center gap-3 text-gray-700"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                        Falar com a Noiva (Vitória)
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                <div class="mb-8">
+                    <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Pais do Noivo</p>
+                    <p class="font-serif text-xl text-gray-800">Natividade Pereira de Araújo</p>
+                    <p class="font-serif text-xl text-gray-800">&</p>
+                    <p class="font-serif text-xl text-gray-800">Maria Barros de Araújo</p>
                 </div>
-            );
-        };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+                <div class="mb-8">
+                    <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Pais da Noiva</p>
+                    <p class="font-serif text-xl text-gray-800">Reilson Barbosa Santos</p>
+                    <p class="font-serif text-xl text-gray-800">&</p>
+                    <p class="font-serif text-xl text-gray-800">Vânia Nunes de Araújo Pereira</p>
+                </div>
+
+                <p class="text-gray-600 italic mt-6 font-serif">
+                    Temos a honra de convidar você e sua família para celebrar nossa união.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 3: Detalhes e Alianças -->
+    <section class="relative py-24 px-4 section-bg flex items-center justify-center text-center" 
+             style="background-image: url('https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=2070&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-gray-900/60"></div>
+        
+        <div class="relative z-10 max-w-lg mx-auto text-white">
+            <div class="glass-panel p-8 rounded-xl">
+                <i data-lucide="calendar-heart" class="w-12 h-12 mx-auto mb-4 text-gold-accent"></i>
+                <h2 class="text-4xl font-script mb-2">A Cerimônia</h2>
+                <p class="text-2xl font-serif font-bold uppercase tracking-widest mb-4">Dezembro</p>
+                
+                <div class="h-px w-full bg-white/30 my-6"></div>
+
+                <p class="text-lg mb-4">
+                    O convite oficial, com a data exata, endereço e a Igreja, será enviado em breve.
+                </p>
+                <div class="bg-gold-accent/20 border border-gold-accent/50 p-4 rounded-lg mt-4">
+                    <p class="text-sm italic">
+                        <i data-lucide="info" class="w-4 h-4 inline mr-1"></i>
+                        Qualquer mudança na data será avisada com antecedência.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 4: Confirmação (Flores e Finalização) -->
+    <section class="py-20 px-4 bg-white text-center relative overflow-hidden">
+        <!-- Elementos decorativos de flores nas bordas -->
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-100 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="max-w-md mx-auto relative z-10">
+            <h2 class="text-4xl font-script text-gray-800 mb-4">Sua presença é essencial</h2>
+            <p class="text-gray-600 mb-8 font-serif">
+                Por favor, confirme sua presença clicando no botão abaixo e enviando a mensagem para nós.
+            </p>
+
+            <!-- Botão WhatsApp Genérico (abre seletor de contato) -->
+            <a href="whatsapp://send?text=Queridos%20noivos%2C%20Recebi%20o%20convite%20para%20o%20seu%20casamento%20e%2C%20com%20grande%20satisfa%C3%A7%C3%A3o%20e%20alegria%2C%20confirmo%20a%20minha%20presen%C3%A7a.%20Agrade%C3%A7o%20a%20considera%C3%A7%C3%A3o%20e%20a%20oportunidade%20de%20celebrar%20este%20momento%20sublime%20em%20suas%20vidas.%20Estarei%20presente%20para%20testemunhar%20essa%20uni%C3%A3o%20aben%C3%A7oada%21" 
+               class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition hover:scale-105 duration-300 text-lg group">
+                <i data-lucide="message-circle" class="w-6 h-6 group-hover:rotate-12 transition-transform"></i>
+                Confirmar Presença
+            </a>
+
+            <p class="text-xs text-gray-400 mt-4">
+                Ao clicar, escolha o contato do Noivo ou da Noiva no seu WhatsApp.
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8 text-center">
+        <p class="font-script text-3xl mb-2">Ronaldo & Vitória</p>
+        <p class="text-xs text-gray-500 uppercase tracking-widest">Dezembro &bull; 2025</p>
+    </footer>
+
+    <!-- Inicialização dos ícones -->
+    <script>
+        lucide.createIcons();
     </script>
 </body>
-
 </html>
