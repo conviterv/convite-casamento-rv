@@ -3,439 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Convite de Casamento - Ronaldo & Vitória</title>
+    <title>Casamento de Ronaldo & Vitória</title>
     
-    <!-- Tailwind CSS (via CDN para simplicidade) -->
+    <!-- Tailwind CSS (Via CDN para estilização rápida e responsiva) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Ícones Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Great Vibes (Cursiva elegante) e Cormorant Garamond (Serifa clássica) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
         /* Configurações Globais */
         :root {
-            --gold: #D4AF37;
-            --rose-gold: #B76E79;
-            --cream: #FFFDD0;
-            --deep-green: #2F4F4F;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --primary-gold: #D4AF37;
+            --text-dark: #2c2c2c;
         }
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #fdfbf7;
-            overflow: hidden; /* Controlado via JS */
-            height: 100vh;
+        body, html {
             margin: 0;
+            padding: 0;
+            overflow: hidden; /* Controlado pelo container de scroll */
+            background-color: #000;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-dark);
         }
 
-        .font-script { font-family: 'Great Vibes', cursive; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-cinzel { font-family: 'Cinzel', serif; }
-
-        /* Animação do Envelope 3D */
-        .envelope-container {
-            perspective: 1000px;
-            width: 90vw;
-            max-width: 400px;
-            height: 250px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 50;
-            transition: all 1s ease-in-out;
-            cursor: pointer;
+        /* Tipografia Personalizada */
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+        .font-body {
+            font-family: 'Lato', sans-serif;
         }
 
-        .envelope {
+        /* Scroll Snap Container (Navegação Magnética) */
+        .scroll-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
             position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-        }
-
-        .envelope-body {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: #e6dfd3;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             z-index: 10;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Textura do papel do envelope */
-        .envelope-body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4af37' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
-        .flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0;
-            border-left: 135px solid transparent; /* Responsivo via JS idealmente, mas fixo para este demo */
-            border-right: 135px solid transparent;
-            border-top: 130px solid #dcd3c3;
-            transform-origin: top;
-            transition: transform 0.6s ease 0.2s, z-index 0.2s;
-            z-index: 20;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
-        }
-
-        /* Lacre de Cera */
-        .wax-seal {
-            position: absolute;
-            top: -75px; /* Ajuste baseado no flap */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background: #800000;
-            border-radius: 50%;
-            border: 2px solid #600000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.2);
-            z-index: 21;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(212, 175, 55, 0.8);
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        /* Classes de estado Aberto */
-        .envelope-container.open .flap {
-            transform: rotateX(180deg);
-            z-index: 5;
-        }
-
-        .envelope-container.open .wax-seal {
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .envelope-container.open {
-            animation: envelopeDisappear 1.5s forwards 0.8s;
-        }
-
-        @keyframes envelopeDisappear {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -150%) scale(0.5); visibility: hidden; }
-        }
-
-        /* Conteúdo Principal (Cartão) */
-        #main-content {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease 1.5s;
-            height: 100%;
-            width: 100%;
+        section {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        #main-content.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Páginas do Slide */
-        .slide {
+        /* Background Images com restrição de sobreposição */
+        .bg-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
-            z-index: 0;
             background-size: cover;
             background-position: center;
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 10;
-        }
-
-        /* Sobreposição suave para legibilidade */
-        .slide-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 253, 245, 0.85);
             z-index: -1;
         }
-
-        /* Decorações */
-        .divider {
-            height: 2px;
-            width: 100px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 1.5rem auto;
+        
+        /* Overlay sutil (máximo 25% conforme regra) */
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25); 
+            z-index: 0;
         }
 
-        .btn-nav {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: #555;
-            padding: 10px 20px;
-            border-radius: 30px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
-            transition: all 0.3s;
+        /* Efeito de Partículas (CSS puro) */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: floatUp 10s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Glassmorphism Premium */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            border-radius: 2px; /* Cantos levemente arredondados para elegância */
+            padding: 2rem;
+            width: 85%;
+            max-width: 500px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Animação de Abertura (Envelope) */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f0;
+            z-index: 100;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            flex-direction: column;
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .envelope-content {
+            text-align: center;
         }
 
-        .btn-nav:hover {
-            background: var(--gold);
-            color: white;
-        }
-
-        /* Botão do WhatsApp Especial */
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        .seal {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
             animation: pulse 2s infinite;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
+        }
+
+        .click-to-open {
             font-family: 'Lato', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+            cursor: pointer;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .slide-up {
+            transform: translateY(-100%);
         }
 
-        .bg-scroll {
+        /* Animações de Entrada (Scroll) */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botão/Seta de Scroll */
+        .scroll-hint {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            color: white;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: opacity 0.5s ease;
+        }
+
+        .scroll-hint.hidden {
+            opacity: 0;
             pointer-events: none;
         }
 
-        /* Ajustes de Responsividade para telas muito pequenas */
-        @media (max-width: 360px) {
-            h1 { font-size: 2rem !important; }
-            h2 { font-size: 1.2rem !important; }
-            p { font-size: 0.9rem !important; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
         }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Utilitários de Texto */
+        .gold-text {
+            color: #8a6d3b; /* Tom dourado escuro para legibilidade no vidro */
+        }
+        .separator {
+            height: 1px;
+            width: 50px;
+            background: #8a6d3b;
+            margin: 15px auto;
+            opacity: 0.5;
+        }
+        
+        /* Botão do WhatsApp */
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s;
+            margin-top: 15px;
+        }
+        .btn-whatsapp:active {
+            transform: scale(0.95);
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Fundo Fixo com Imagem Texturizada -->
-    <div class="bg-scroll bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')] opacity-20 bg-cover bg-center"></div>
-
-    <!-- Envelope Interativo -->
-    <div class="envelope-container" id="envelope" onclick="openInvitation()">
-        <div class="envelope">
-            <div class="flap">
-                <div class="wax-seal">RV</div>
-            </div>
-            <div class="envelope-body">
-                <div class="text-gray-600 font-cinzel text-sm tracking-widest text-center mt-8">
-                    Toque para abrir<br>
-                    <span class="text-xs font-serif italic text-rose-500">Convite Especial</span>
-                </div>
-            </div>
+    <!-- Overlay de Abertura (Efeito Carta) -->
+    <div id="intro-overlay" onclick="openInvitation()">
+        <div class="envelope-content">
+            <div class="seal"><i class="fa-solid fa-heart"></i></div>
+            <h1 class="font-script text-4xl text-gray-700">Ronaldo & Vitória</h1>
+            <p class="click-to-open">Toque para abrir</p>
         </div>
     </div>
 
-    <!-- Conteúdo do Convite -->
-    <main id="main-content" class="h-full w-full relative">
-        
-        <!-- PÁGINA 1: Capa / Versículo -->
-        <section class="slide active" id="slide-1" style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-            <div class="slide-overlay"></div>
-            <div class="relative z-10 w-full max-w-md">
+    <!-- Seta de Navegação -->
+    <div id="scroll-arrow" class="scroll-hint">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <!-- Container Principal com Scroll Snap -->
+    <div class="scroll-container" id="main-container">
+
+        <!-- PÁGINA 1: Anúncio e Versículo -->
+        <section id="page-1">
+            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPash460JHdgFheTukC1EfUOSuFrx0BDPoFoKQSJ8hPZQQneL5lF1oRanz8jN8S9RSi9SFc0WqcaKhlN4XisNKGJp0heTMrs_v5y2r66P-f-XyNk0NBZQPKkH3msdEcpQD7O-7l0LwFQJVZovJYFnSMUQ=w899-h599-s-no-gm?authuser=0');"></div>
+            <div class="bg-overlay"></div>
+            <!-- Partículas -->
+            <div class="particles" id="particles-1"></div>
+
+            <div class="glass-card reveal-element">
+                <p class="font-body text-sm uppercase tracking-widest mb-2">Vamos nos casar!</p>
+                <div class="separator"></div>
+                <h1 class="font-script text-5xl md:text-6xl mb-4 gold-text">Ronaldo<br>&<br>Vitória</h1>
+                <div class="separator"></div>
+                <div class="mt-6 px-2">
+                    <p class="font-serif italic text-lg leading-relaxed">
+                        "Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe."
+                    </p>
+                    <p class="text-xs mt-2 uppercase tracking-wide">— Mateus 19:6</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 2: Pais e Apresentação -->
+        <section id="page-2">
+            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNfobFO9-M1RCEJ0MjQCFKigCGA0zJ-W-gRXR5p5NucnSILiFzF6Pb-i4TzuuI5hUZRomaMKfVc6uPYimEh91mNq-_iTMdFVmk0LMI5V6Er1TycPLcnLwpFx0iO6JFsJjiAyXOoZrOi3L4LWYp0h2Cu3g=w547-h365-s-no-gm?authuser=0');"></div>
+            <div class="bg-overlay"></div>
+            <div class="particles" id="particles-2"></div>
+
+            <div class="glass-card reveal-element">
+                <p class="font-body text-xs uppercase tracking-widest mb-4">Com a benção de seus pais</p>
+                
                 <div class="mb-4">
-                    <i data-lucide="heart" class="w-8 h-8 mx-auto text-rose-400 fill-current"></i>
-                </div>
-                <h3 class="font-serif text-xl text-gray-500 italic mb-2">Vamos nos Casar</h3>
-                <h1 class="font-script text-6xl text-gray-800 mb-6" style="color: #b76e79;">Ronaldo & Vitória</h1>
-                
-                <div class="divider"></div>
-                
-                <blockquote class="font-serif text-gray-700 italic text-lg leading-relaxed px-4">
-                    "Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe."
-                </blockquote>
-                <p class="mt-4 text-sm font-bold text-gray-500 tracking-widest font-cinzel">MATEUS 19:6</p>
-
-                <button class="btn-nav mx-auto" onclick="nextSlide(2)">
-                    Abrir <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- PÁGINA 2: Pais e Noivos -->
-        <section class="slide" id="slide-2" style="background-image: url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-            <div class="slide-overlay"></div>
-            <div class="relative z-10 w-full max-w-md">
-                <div class="flex justify-center mb-4">
-                    <i data-lucide="users" class="w-6 h-6 text-yellow-600 opacity-60"></i>
+                    <h3 class="font-serif font-bold text-lg gold-text">Pais do Noivo</h3>
+                    <p class="font-serif text-lg">Natividade Pereira de Araújo</p>
+                    <p class="font-serif text-lg">&</p>
+                    <p class="font-serif text-lg">Maria Barros de Araújo</p>
                 </div>
 
-                <p class="text-sm uppercase tracking-widest text-gray-500 font-cinzel mb-4">Com a benção de Deus e de nossos pais</p>
-
-                <div class="grid grid-cols-1 gap-6 text-gray-800">
-                    <div class="parents-group">
-                        <p class="font-script text-2xl text-rose-500">Natividade Pereira de Araújo</p>
-                        <p class="font-script text-2xl text-rose-500">& Maria Barros de Araújo</p>
-                    </div>
-                    
-                    <div class="text-xs text-gray-400 font-serif italic">&</div>
-
-                    <div class="parents-group">
-                        <p class="font-script text-2xl text-rose-500">Reilson Barbosa Santos</p>
-                        <p class="font-script text-2xl text-rose-500">& Vânia Nunes de Araújo Pereira</p>
-                    </div>
+                <div class="mb-6">
+                    <h3 class="font-serif font-bold text-lg gold-text">Pais da Noiva</h3>
+                    <p class="font-serif text-lg">Reilson Barbosa Santos</p>
+                    <p class="font-serif text-lg">&</p>
+                    <p class="font-serif text-lg">Vânia Nunes de Araújo Pereira</p>
                 </div>
 
-                <div class="divider"></div>
-
-                <p class="font-serif italic text-gray-700 mt-4 px-2">
-                    Temos a honra e a alegria de anunciar que nossos filhos<br>
-                    <span class="font-cinzel font-bold text-gray-900 not-italic block mt-2 text-lg">Ronaldo & Vitória</span>
-                    <br>se unirão em sagrado matrimônio.
+                <p class="font-body text-sm italic leading-relaxed px-2">
+                    Temos a honra e a imensa alegria de anunciar que nossos filhos se unirão em sagrado matrimônio.
                 </p>
-
-                <div class="flex justify-center gap-4 mt-6">
-                    <button class="btn-nav text-xs" onclick="prevSlide(1)">Voltar</button>
-                    <button class="btn-nav text-xs" onclick="nextSlide(3)">O Convite</button>
-                </div>
             </div>
         </section>
 
-        <!-- PÁGINA 3: O Convite Oficial -->
-        <section class="slide" id="slide-3" style="background-image: url('https://images.unsplash.com/photo-1510076857177-7470076d4098?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-            <div class="slide-overlay"></div>
-            <div class="relative z-10 w-full max-w-md px-4">
-                <div class="border-2 border-double border-yellow-600/30 p-6 rounded-lg bg-white/50 backdrop-blur-sm">
-                    <i data-lucide="mail-open" class="w-8 h-8 mx-auto text-yellow-600 mb-4"></i>
-                    
-                    <p class="font-serif text-gray-600 italic mb-2">Para</p>
-                    <h2 class="font-script text-4xl text-gray-900 mb-4">[Nome do Convidado e Família]</h2>
-                    
-                    <p class="font-serif text-gray-700 leading-relaxed mb-6">
-                        Neste momento único de nossas vidas, onde duas histórias se tornam uma sob o olhar de Deus, nossa felicidade não estaria completa sem a presença de pessoas tão especiais.
-                    </p>
-                    
-                    <p class="font-cinzel text-sm text-gray-500 uppercase tracking-wider">
-                        Os noivos e seus pais tem a honra de convidá-los para testemunhar este amor.
+        <!-- PÁGINA 3: Convite Oficial -->
+        <section id="page-3">
+            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPqr8xTnhYTfbsTSgc_dtcnhYYf_9JPUWj07Ujd3ajZQ1zebIxhK3xpcQzOGlltZ4mx7X55nGS4vm4J2kQjkva6LDW84Y3ju6Fnsmn33N5ZnbVdyfpLeqM0XYPvh6SaU6_1qP6c4ZNI7nx4kdb1QcJ0LQ=w576-h384-s-no-gm?authuser=0');"></div>
+            <div class="bg-overlay"></div>
+            <div class="particles" id="particles-3"></div>
+
+            <div class="glass-card reveal-element">
+                <h2 class="font-script text-4xl mb-4 gold-text">Convite Especial</h2>
+                <p class="font-body text-sm mb-6">Juntamente com nossos pais, temos a honra de convidar</p>
+                
+                <div class="py-4 border-t border-b border-gray-300 mb-6">
+                    <p class="font-serif text-2xl font-bold text-gray-800">
+                        <!-- Espaço para o nome do convidado -->
+                        Você e sua Família
                     </p>
                 </div>
 
-                <div class="flex justify-center gap-4 mt-6">
-                    <button class="btn-nav text-xs" onclick="prevSlide(2)">Voltar</button>
-                    <button class="btn-nav text-xs" onclick="nextSlide(4)">Aceitar</button>
-                </div>
+                <p class="font-body text-sm leading-relaxed">
+                    Para celebrar o amor, a união e o início de nossa nova vida juntos. Sua presença tornará este momento ainda mais inesquecível.
+                </p>
             </div>
         </section>
 
-        <!-- PÁGINA 4: Aceite e Instruções -->
-        <section class="slide" id="slide-4" style="background-image: url('https://images.unsplash.com/photo-1520854221256-17451cc330e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-            <div class="slide-overlay"></div>
-            <div class="relative z-10 w-full max-w-md px-4">
-                
-                <h2 class="font-cinzel text-2xl text-gray-800 mb-2">Aceitar Convite</h2>
-                <div class="w-16 h-1 bg-green-500 mx-auto mb-6 rounded"></div>
+        <!-- PÁGINA 4: Aceite / WhatsApp -->
+        <section id="page-4">
+            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczN5TfIUzG-41jtSgesfHN-uffA_lqbQravfPPXxOicLbHcGlHBrRFTdbSboJVBHbWHzTS7dAFhMB-Bplkqu6wnxq2XYz26bGegZOMc8OLQQ37mpYSzMIT71i0VfbmZVlbsax_rFBhRvYzPYWWTVZl-3jw=w399-h599-s-no-gm?authuser=0');"></div>
+            <div class="bg-overlay"></div>
+            <div class="particles" id="particles-4"></div>
 
-                <p class="text-gray-600 font-serif italic mb-8">
-                    Ao clicar abaixo, você será redirecionado para enviar uma mensagem de carinho aos noivos.
+            <div class="glass-card reveal-element">
+                <h2 class="font-script text-4xl mb-2 gold-text">Aceitar Convite</h2>
+                
+                <p class="font-body text-xs text-gray-600 mb-6 px-2">
+                    Toque no botão abaixo para nos enviar uma mensagem.
                 </p>
 
-                <!-- Link do WhatsApp -->
-                <a href="https://wa.me/?text=Queridos%20Noivos%2C%0A%0ARecebemos%20com%20grande%20alegria%20e%20honra%20o%20convite%20para%20testemunhar%20esta%20nova%20alian%C3%A7a%20firmada%20em%20Deus.%20Agradecemos%20a%20considera%C3%A7%C3%A3o%20e%20a%20oportunidade%20de%20nos%20alegrarmos%20convosco.%20J%C3%A1%20estamos%20ansiosos%20pelos%20detalhes!" 
-                   target="_blank" 
-                   class="btn-whatsapp">
-                   <i data-lucide="message-circle" class="w-6 h-6"></i>
-                   Aceitar via WhatsApp
+                <a href="#" onclick="openWhatsApp()" class="btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Enviar Mensagem</span>
                 </a>
 
-                <div class="mt-10 bg-white/60 p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 class="font-cinzel text-sm font-bold text-gray-700 mb-2 flex items-center justify-center gap-2">
-                        <i data-lucide="info" class="w-4 h-4"></i> Próximos Passos
-                    </h4>
-                    <p class="text-xs text-gray-600 leading-relaxed font-sans">
-                        Após o aceite, enviaremos o <strong>Manual dos Convidados</strong> contendo a data, horário, local (Igreja), lista de presentes e normas. A confirmação oficial de presença será solicitada apenas após o recebimento deste manual.
+                <div class="mt-8 pt-4 border-t border-gray-300">
+                    <p class="font-body text-xs text-gray-500 uppercase tracking-wider mb-2">Próximos Passos</p>
+                    <p class="font-serif text-sm leading-relaxed px-1">
+                        Após o aceite, enviaremos em breve o <strong>Manual dos Convidados</strong> contendo a lista de presentes, data, horário, local e igreja.
+                        <br><br>
+                        <em>A confirmação oficial de presença será realizada somente após o recebimento deste manual.</em>
                     </p>
                 </div>
-
-                <button class="btn-nav mx-auto mt-6 text-xs" onclick="prevSlide(3)">Voltar</button>
             </div>
         </section>
 
-    </main>
+    </div>
 
     <script>
-        // Inicializa ícones
-        lucide.createIcons();
-
-        // Lógica de Abertura do Envelope
+        // --- 1. Animação de Abertura (Envelope) ---
         function openInvitation() {
-            const envelope = document.getElementById('envelope');
-            const mainContent = document.getElementById('main-content');
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.transform = 'translateY(-100%)';
             
-            // Adiciona classe para animar CSS
-            envelope.classList.add('open');
-            
-            // Mostra o conteúdo principal após a animação do envelope
+            // Inicia a música ou sons se houver (opcional)
+            // Aguarda um pouco para revelar a primeira animação
             setTimeout(() => {
-                mainContent.classList.add('visible');
-            }, 1000);
+                checkScroll();
+            }, 800);
         }
 
-        // Lógica de Navegação dos Slides
-        function nextSlide(slideNumber) {
-            hideAllSlides();
-            const slide = document.getElementById(`slide-${slideNumber}`);
-            if(slide) slide.classList.add('active');
+        // --- 2. Lógica do WhatsApp ---
+        function openWhatsApp() {
+            const message = "Queridos Noivos,%0A%0ARecebemos com grande alegria e honra o convite para testemunhar esta nova aliança firmada em Deus. Agradecemos a consideração e a oportunidade de nos alegrarmos convosco. Já estamos ansiosos pelos detalhes!";
+            // Abre o link genérico que força a escolha do contato no app
+            window.open(`https://wa.me/?text=${message}`, '_blank');
         }
 
-        function prevSlide(slideNumber) {
-            hideAllSlides();
-            const slide = document.getElementById(`slide-${slideNumber}`);
-            if(slide) slide.classList.add('active');
+        // --- 3. Sistema de Animação ao Rolar (Scroll Animation & Hint) ---
+        const container = document.getElementById('main-container');
+        const sections = document.querySelectorAll('section');
+        const scrollArrow = document.getElementById('scroll-arrow');
+
+        function checkScroll() {
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                const element = section.querySelector('.reveal-element');
+
+                // Se a seção está visível (focada)
+                if (rect.top >= -100 && rect.top <= window.innerHeight / 2) {
+                    if (element) {
+                        element.classList.add('active');
+                    }
+
+                    // Lógica para esconder a seta na última página
+                    if (index === sections.length - 1) {
+                        scrollArrow.classList.add('hidden');
+                    } else {
+                        scrollArrow.classList.remove('hidden');
+                    }
+                } else {
+                    // Opcional: remover a classe para reanimar quando voltar
+                    // if (element) element.classList.remove('active');
+                }
+            });
         }
 
-        function hideAllSlides() {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(slide => slide.classList.remove('active'));
+        // Adiciona listener ao scroll
+        container.addEventListener('scroll', checkScroll);
+        
+        // Executa uma vez no carregamento para garantir
+        window.onload = () => {
+             // Cria as partículas dinamicamente
+            createParticles();
+        };
+
+        // --- 4. Gerador de Partículas Leves ---
+        function createParticles() {
+            const particleContainers = document.querySelectorAll('.particles');
+            
+            particleContainers.forEach(container => {
+                const particleCount = 15; // Quantidade leve
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Posição aleatória
+                    const x = Math.random() * 100;
+                    const delay = Math.random() * 5;
+                    const duration = 5 + Math.random() * 10;
+                    
+                    particle.style.left = `${x}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    container.appendChild(particle);
+                }
+            });
         }
+
     </script>
 </body>
 </html>
+
