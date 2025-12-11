@@ -5,193 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Casamento de Ronaldo & Vitória</title>
     
-    <!-- Tailwind CSS (Via CDN para estilização rápida e responsiva) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes Elegantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome para Ícones -->
+    <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Great Vibes (Cursiva elegante) e Cormorant Garamond (Serifa clássica) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* Configurações Globais */
+        /* --- Variáveis de Design --- */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.7);
+            --serenity-blue: #92A8D1;
+            --serenity-blue-dark: #7689ad;
+            --white: #ffffff;
+            --gold: #C5A059;
+            --text-dark: #2C3E50;
+            --text-light: #546E7A;
+            --glass-bg: rgba(255, 255, 255, 0.65); /* Transparência ajustada */
             --glass-border: rgba(255, 255, 255, 0.4);
-            --primary-gold: #D4AF37;
-            --text-dark: #2c2c2c;
+            --blur: 15px;
         }
 
-        body, html {
+        /* --- Reset & Base --- */
+        * {
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Controlado pelo container de scroll */
-            background-color: #000;
-            font-family: 'Cormorant Garamond', serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            overflow: hidden; /* Controlado pelo scroll container */
+            background-color: #f0f0f0;
+        }
+
+        /* --- Tipografia --- */
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             color: var(--text-dark);
         }
 
-        /* Tipografia Personalizada */
-        .font-script {
+        .script-font {
             font-family: 'Great Vibes', cursive;
-        }
-        .font-body {
-            font-family: 'Lato', sans-serif;
+            text-transform: none;
+            font-weight: 400;
         }
 
-        /* Scroll Snap Container (Navegação Magnética) */
+        /* --- Scroll Snap Container --- */
         .scroll-container {
             height: 100vh;
-            width: 100vw;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
             position: relative;
-            z-index: 10;
         }
 
+        /* --- Seções (Páginas) --- */
         section {
             height: 100vh;
-            width: 100vw;
+            width: 100%;
             scroll-snap-align: start;
             position: relative;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
             overflow: hidden;
         }
 
-        /* Background Images com restrição de sobreposição */
-        .bg-image {
+        /* Sobreposição sutil para legibilidade (não ultrapassa 25%) */
+        section::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
-        
-        /* Overlay sutil (máximo 25% conforme regra) */
-        .bg-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.25); 
-            z-index: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
 
-        /* Efeito de Partículas (CSS puro) */
+        /* Partículas de fundo (Animação sutil) */
         .particles {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
             z-index: 1;
-        }
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: floatUp 10s linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.2' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            animation: moveBackground 60s linear infinite;
+            pointer-events: none;
         }
 
-        /* Glassmorphism Premium */
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
+        }
+
+        /* --- Glassmorphism Card --- */
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            border-radius: 2px; /* Cantos levemente arredondados para elegância */
-            padding: 2rem;
-            width: 85%;
-            max-width: 500px;
             position: relative;
             z-index: 2;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh; /* Evita que o card saia da tela */
+            overflow-y: auto; /* Rolagem interna se o conteúdo for grande */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             text-align: center;
-            transition: all 0.3s ease;
+            opacity: 0; /* Para animação de entrada */
+            transform: translateY(30px);
+            transition: all 1s ease-out;
         }
 
-        /* Animação de Abertura (Envelope) */
-        #intro-overlay {
+        /* Esconde a barra de rolagem do card para estética */
+        .glass-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .glass-card::-webkit-scrollbar-thumb {
+            background-color: var(--gold);
+            border-radius: 4px;
+        }
+
+        /* --- Animações --- */
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Destaques de Cores --- */
+        .highlight-serenity {
+            color: var(--serenity-blue-dark);
+            font-weight: 700;
+            background: rgba(146, 168, 209, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(146, 168, 209, 0.3);
+        }
+
+        .highlight-white {
+            color: #555; /* Texto escuro para ler sobre o fundo claro */
+            background-color: var(--white);
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* --- Envelope Opening Animation --- */
+        #envelope-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f5f5f0;
-            z-index: 100;
+            z-index: 9999;
+            pointer-events: none;
             display: flex;
-            align-items: center;
-            justify-content: center;
             flex-direction: column;
-            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        
-        .envelope-content {
-            text-align: center;
         }
 
-        .seal {
+        .envelope-half {
+            width: 100%;
+            height: 50%;
+            background: #fdfbf7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1) 0.5s;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .envelope-top {
+            border-bottom: 2px solid var(--gold);
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+
+        .envelope-bottom {
+            border-top: 2px solid var(--gold);
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .envelope-logo {
+            font-family: 'Cinzel', serif;
             font-size: 3rem;
-            color: var(--primary-gold);
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            color: var(--gold);
         }
 
-        .click-to-open {
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .slide-up {
+        .envelope-open .envelope-top {
             transform: translateY(-100%);
         }
 
-        /* Animações de Entrada (Scroll) */
-        .reveal-element {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
+        .envelope-open .envelope-bottom {
+            transform: translateY(100%);
         }
 
-        .reveal-element.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Botão/Seta de Scroll */
+        /* --- Seta de Scroll --- */
         .scroll-hint {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 50;
-            color: white;
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
+            z-index: 100;
+            color: var(--white);
+            font-size: 2rem;
+            animation: float 2s infinite ease-in-out;
+            opacity: 1;
+            transition: opacity 0.5s;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            transition: opacity 0.5s ease;
+            cursor: pointer;
         }
 
         .scroll-hint.hidden {
@@ -199,257 +236,468 @@
             pointer-events: none;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
         }
 
-        /* Utilitários de Texto */
-        .gold-text {
-            color: #8a6d3b; /* Tom dourado escuro para legibilidade no vidro */
+        /* --- Countdown --- */
+        .countdown {
+            display: flex;
+            justify-content: space-around;
+            margin: 1.5rem 0;
         }
-        .separator {
-            height: 1px;
-            width: 50px;
-            background: #8a6d3b;
-            margin: 15px auto;
-            opacity: 0.5;
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        
-        /* Botão do WhatsApp */
+
+        .time-value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Accordion (Lista de Presentes) --- */
+        .accordion-item {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .accordion-content p {
+            padding: 1rem;
+            color: var(--text-light);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* --- Botões --- */
+        .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, background 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: #b08d4b;
+        }
+
+        .btn-map {
+            background-color: var(--text-dark);
+        }
+
         .btn-whatsapp {
             background-color: #25D366;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-family: 'Lato', sans-serif;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            transition: transform 0.2s;
-            margin-top: 15px;
+            font-size: 1.1rem;
         }
-        .btn-whatsapp:active {
-            transform: scale(0.95);
+        
+        .divider {
+            height: 2px;
+            width: 50px;
+            background-color: var(--gold);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Responsividade Extra */
+        @media (max-width: 380px) {
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            .glass-card { padding: 1.5rem 1rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Overlay de Abertura (Efeito Carta) -->
-    <div id="intro-overlay" onclick="openInvitation()">
-        <div class="envelope-content">
-            <div class="seal"><i class="fa-solid fa-heart"></i></div>
-            <h1 class="font-script text-4xl text-gray-700">Ronaldo & Vitória</h1>
-            <p class="click-to-open">Toque para abrir</p>
+    <!-- Envelope Animation Overlay -->
+    <div id="envelope-overlay">
+        <div class="envelope-half envelope-top">
+            <div class="envelope-logo">R</div>
+        </div>
+        <div class="envelope-half envelope-bottom">
+            <div class="envelope-logo">V</div>
         </div>
     </div>
 
-    <!-- Seta de Navegação -->
-    <div id="scroll-arrow" class="scroll-hint">
-        <i class="fa-solid fa-chevron-down"></i>
+    <!-- Scroll Hint Arrow -->
+    <div class="scroll-hint" id="scroll-arrow" onclick="scrollNext()">
+        <i class="fas fa-chevron-down"></i>
     </div>
 
-    <!-- Container Principal com Scroll Snap -->
-    <div class="scroll-container" id="main-container">
+    <!-- Main Container -->
+    <main class="scroll-container" id="main-scroller">
 
-        <!-- PÁGINA 1: Anúncio e Versículo -->
-        <section id="page-1">
-            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPash460JHdgFheTukC1EfUOSuFrx0BDPoFoKQSJ8hPZQQneL5lF1oRanz8jN8S9RSi9SFc0WqcaKhlN4XisNKGJp0heTMrs_v5y2r66P-f-XyNk0NBZQPKkH3msdEcpQD7O-7l0LwFQJVZovJYFnSMUQ=w899-h599-s-no-gm?authuser=0');"></div>
-            <div class="bg-overlay"></div>
-            <!-- Partículas -->
-            <div class="particles" id="particles-1"></div>
-
-            <div class="glass-card reveal-element">
-                <p class="font-body text-sm uppercase tracking-widest mb-2">Vamos nos casar!</p>
-                <div class="separator"></div>
-                <h1 class="font-script text-5xl md:text-6xl mb-4 gold-text">Ronaldo<br>&<br>Vitória</h1>
-                <div class="separator"></div>
-                <div class="mt-6 px-2">
-                    <p class="font-serif italic text-lg leading-relaxed">
-                        "Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe."
-                    </p>
-                    <p class="text-xs mt-2 uppercase tracking-wide">— Mateus 19:6</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PÁGINA 2: Pais e Apresentação -->
-        <section id="page-2">
-            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNfobFO9-M1RCEJ0MjQCFKigCGA0zJ-W-gRXR5p5NucnSILiFzF6Pb-i4TzuuI5hUZRomaMKfVc6uPYimEh91mNq-_iTMdFVmk0LMI5V6Er1TycPLcnLwpFx0iO6JFsJjiAyXOoZrOi3L4LWYp0h2Cu3g=w547-h365-s-no-gm?authuser=0');"></div>
-            <div class="bg-overlay"></div>
-            <div class="particles" id="particles-2"></div>
-
-            <div class="glass-card reveal-element">
-                <p class="font-body text-xs uppercase tracking-widest mb-4">Com a benção de seus pais</p>
-                
-                <div class="mb-4">
-                    <h3 class="font-serif font-bold text-lg gold-text">Pais do Noivo</h3>
-                    <p class="font-serif text-lg">Natividade Pereira de Araújo</p>
-                    <p class="font-serif text-lg">&</p>
-                    <p class="font-serif text-lg">Maria Barros de Araújo</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="font-serif font-bold text-lg gold-text">Pais da Noiva</h3>
-                    <p class="font-serif text-lg">Reilson Barbosa Santos</p>
-                    <p class="font-serif text-lg">&</p>
-                    <p class="font-serif text-lg">Vânia Nunes de Araújo Pereira</p>
-                </div>
-
-                <p class="font-body text-sm italic leading-relaxed px-2">
-                    Temos a honra e a imensa alegria de anunciar que nossos filhos se unirão em sagrado matrimônio.
+        <!-- Página 1: Capa -->
+        <section class="page" id="page1" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPash460JHdgFheTukC1EfUOSuFrx0BDPoFoKQSJ8hPZQQneL5lF1oRanz8jN8S9RSi9SFc0WqcaKhlN4XisNKGJp0heTMrs_v5y2r66P-f-XyNk0NBZQPKkH3msdEcpQD7O-7l0LwFQJVZovJYFnSMUQ=w899-h599-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <span class="script-font" style="font-size: 2.5rem; color: var(--gold);">Vamos nos casar!</span>
+                <div class="divider"></div>
+                <h1 style="font-size: 3rem; margin: 1rem 0;">Ronaldo <br>&<br> Vitória</h1>
+                <p style="font-style: italic; margin-top: 1.5rem; font-size: 0.9rem;">
+                    "Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém o separe." <br>
+                    <strong>Mateus 19:6</strong>
                 </p>
             </div>
         </section>
 
-        <!-- PÁGINA 3: Convite Oficial -->
-        <section id="page-3">
-            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPqr8xTnhYTfbsTSgc_dtcnhYYf_9JPUWj07Ujd3ajZQ1zebIxhK3xpcQzOGlltZ4mx7X55nGS4vm4J2kQjkva6LDW84Y3ju6Fnsmn33N5ZnbVdyfpLeqM0XYPvh6SaU6_1qP6c4ZNI7nx4kdb1QcJ0LQ=w576-h384-s-no-gm?authuser=0');"></div>
-            <div class="bg-overlay"></div>
-            <div class="particles" id="particles-3"></div>
-
-            <div class="glass-card reveal-element">
-                <h2 class="font-script text-4xl mb-4 gold-text">Convite Especial</h2>
-                <p class="font-body text-sm mb-6">Juntamente com nossos pais, temos a honra de convidar</p>
+        <!-- Página 2: Pais e Noivos -->
+        <section class="page" id="page2" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNfobFO9-M1RCEJ0MjQCFKigCGA0zJ-W-gRXR5p5NucnSILiFzF6Pb-i4TzuuI5hUZRomaMKfVc6uPYimEh91mNq-_iTMdFVmk0LMI5V6Er1TycPLcnLwpFx0iO6JFsJjiAyXOoZrOi3L4LWYp0h2Cu3g=w547-h365-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <h3>Com a bênção de Deus e de seus pais</h3>
                 
-                <div class="py-4 border-t border-b border-gray-300 mb-6">
-                    <p class="font-serif text-2xl font-bold text-gray-800">
-                        <!-- Espaço para o nome do convidado -->
-                        Você e sua Família
-                    </p>
+                <div style="margin: 1.5rem 0;">
+                    <p class="script-font" style="font-size: 1.5rem; color: var(--text-dark);">Natividade Pereira de Araújo<br>&<br>Maria Barros de Araújo</p>
+                    <p style="font-size: 0.8rem; text-transform: uppercase; margin-top:0.5rem; color: var(--gold);">Pais do Noivo</p>
                 </div>
 
-                <p class="font-body text-sm leading-relaxed">
-                    Para celebrar o amor, a união e o início de nossa nova vida juntos. Sua presença tornará este momento ainda mais inesquecível.
+                <div style="margin: 1.5rem 0;">
+                    <p class="script-font" style="font-size: 1.5rem; color: var(--text-dark);">Reilson Barbosa Santos<br>&<br>Vânia Nunes de Araújo Pereira</p>
+                    <p style="font-size: 0.8rem; text-transform: uppercase; margin-top:0.5rem; color: var(--gold);">Pais da Noiva</p>
+                </div>
+
+                <div class="divider"></div>
+                <h2 style="font-size: 1.8rem; margin: 1rem 0;">Ronaldo & Vitória</h2>
+                <p>Temos a honra e alegria de anunciar que nos uniremos em sagrado matrimônio.</p>
+            </div>
+        </section>
+
+        <!-- Página 3: Convite Oficial -->
+        <section class="page" id="page3" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPqr8xTnhYTfbsTSgc_dtcnhYYf_9JPUWj07Ujd3ajZQ1zebIxhK3xpcQzOGlltZ4mx7X55nGS4vm4J2kQjkva6LDW84Y3ju6Fnsmn33N5ZnbVdyfpLeqM0XYPvh6SaU6_1qP6c4ZNI7nx4kdb1QcJ0LQ=w576-h384-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <i class="fas fa-envelope-open-text" style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h2>Convite Solene</h2>
+                <p style="margin: 1.5rem 0; line-height: 1.8;">
+                    Com os corações repletos de gratidão a Deus, os noivos, juntamente com seus pais, têm a honra de convidar a
+                </p>
+                <h3 style="color: var(--serenity-blue-dark); margin: 1rem 0; font-size: 1.4rem;">Família IADMEB - Tocantinópolis</h3>
+                <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 1.5rem;">
+                    (Igreja Evangélica Assembleia de Deus Missão Europa/Brasil, na direção do Pr. Emanuel em Tocantinópolis)
+                </p>
+                <p>Para testemunharem este momento único de celebração e amor.</p>
+            </div>
+        </section>
+
+        <!-- Página 4: Manual e Countdown -->
+        <section class="page" id="page4" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczN5TfIUzG-41jtSgesfHN-uffA_lqbQravfPPXxOicLbHcGlHBrRFTdbSboJVBHbWHzTS7dAFhMB-Bplkqu6wnxq2XYz26bGegZOMc8OLQQ37mpYSzMIT71i0VfbmZVlbsax_rFBhRvYzPYWWTVZl-3jw=w399-h599-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <h2>Manual dos Convidados</h2>
+                <p style="margin: 1rem 0;">É uma honra compartilhar com vocês o dia escolhido para o início da nossa aliança.</p>
+                
+                <div class="divider"></div>
+                <h1 style="font-size: 2.5rem; color: var(--text-dark);">19 DE DEZEMBRO <br> 2025</h1>
+                <div class="divider"></div>
+
+                <div class="countdown" id="countdown">
+                    <!-- Timer preenchido via JS -->
+                </div>
+
+                <p style="font-style: italic; font-size: 0.9rem; margin-top: 1rem;">
+                    "Estamos ansiosos por este dia e a sua presença tornará a nossa alegria completa. Contamos os dias para celebrarmos juntos."
                 </p>
             </div>
         </section>
 
-        <!-- PÁGINA 4: Aceite / WhatsApp -->
-        <section id="page-4">
-            <div class="bg-image" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczN5TfIUzG-41jtSgesfHN-uffA_lqbQravfPPXxOicLbHcGlHBrRFTdbSboJVBHbWHzTS7dAFhMB-Bplkqu6wnxq2XYz26bGegZOMc8OLQQ37mpYSzMIT71i0VfbmZVlbsax_rFBhRvYzPYWWTVZl-3jw=w399-h599-s-no-gm?authuser=0');"></div>
-            <div class="bg-overlay"></div>
-            <div class="particles" id="particles-4"></div>
-
-            <div class="glass-card reveal-element">
-                <h2 class="font-script text-4xl mb-2 gold-text">Aceitar Convite</h2>
+        <!-- Página 5: Local -->
+        <section class="page" id="page5" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczNfobFO9-M1RCEJ0MjQCFKigCGA0zJ-W-gRXR5p5NucnSILiFzF6Pb-i4TzuuI5hUZRomaMKfVc6uPYimEh91mNq-_iTMdFVmk0LMI5V6Er1TycPLcnLwpFx0iO6JFsJjiAyXOoZrOi3L4LWYp0h2Cu3g=w547-h365-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <i class="fas fa-church" style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>Onde Consagraremos Nossa União</h3>
+                <div class="divider"></div>
                 
-                <p class="font-body text-xs text-gray-600 mb-6 px-2">
-                    Toque no botão abaixo para nos enviar uma mensagem.
+                <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem;">
+                    Igreja Evangélica Assembleia de Deus<br>Ministério Missão Europa/Brasil
+                </p>
+                <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    Olimpio Brito n. 0, Vila Palmeiras<br>Tocantinópolis - CEP 77900-000
                 </p>
 
-                <a href="#" onclick="openWhatsApp()" class="btn-whatsapp">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span>Enviar Mensagem</span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Olimpio+Brito+Vila+Palmeiras+Tocantinopolis" target="_blank" class="btn btn-map">
+                    <i class="fas fa-map-marker-alt"></i> Ver Localização
                 </a>
+            </div>
+        </section>
 
-                <div class="mt-8 pt-4 border-t border-gray-300">
-                    <p class="font-body text-xs text-gray-500 uppercase tracking-wider mb-2">Próximos Passos</p>
-                    <p class="font-serif text-sm leading-relaxed px-1">
-                        Após o aceite, enviaremos em breve o <strong>Manual dos Convidados</strong> contendo a lista de presentes, data, horário, local e igreja.
-                        <br><br>
-                        <em>A confirmação oficial de presença será realizada somente após o recebimento deste manual.</em>
-                    </p>
+        <!-- Página 6: Diretrizes -->
+        <section class="page" id="page6" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczMSaj_G7pJC14ICQSSyujgNhuj6hEkJ91T4Sx0VatqQBHMcp8hgHqjCwtzYRthBzTcsS_FHrlf3BydagxqyeAutQgyGhv7NLUSMAM21SXoNhh8HEKmt0M_morwqN4OUS3BMTX-kr6b21An_xbqc4TOG4Q=w576-h384-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card" style="text-align: left;">
+                <h3 style="text-align: center; margin-bottom: 1rem;">Diretrizes para a Cerimônia</h3>
+                
+                <div style="font-size: 0.85rem; line-height: 1.5;">
+                    <div style="margin-bottom: 0.8rem;">
+                        <i class="fas fa-clipboard-check" style="color: var(--gold); width: 20px;"></i>
+                        <strong>Confirmação:</strong> A presença requer confirmação no fim deste manual.
+                    </div>
+                    <div style="margin-bottom: 0.8rem;">
+                        <i class="fas fa-user-lock" style="color: var(--gold); width: 20px;"></i>
+                        <strong>Acesso:</strong> Acesso exclusivo com nome na lista.
+                    </div>
+                    <div style="margin-bottom: 0.8rem;">
+                        <i class="fas fa-clock" style="color: var(--gold); width: 20px;"></i>
+                        <strong>Pontualidade:</strong> Início às 19:30. Rogamos chegada antecipada.
+                    </div>
+                    <div style="margin-bottom: 0.8rem;">
+                        <i class="fas fa-tshirt" style="color: var(--gold); width: 20px;"></i>
+                        <strong>Traje:</strong> Decente com pudor e modéstia.
+                    </div>
+                    <div style="margin-bottom: 0.8rem; background: rgba(255,255,255,0.5); padding: 5px; border-radius: 5px;">
+                        <i class="fas fa-palette" style="color: var(--gold); width: 20px;"></i>
+                        <strong>Cores:</strong> <span class="highlight-white">Branco</span> exclusivo da Noiva. Evitar tons de <span class="highlight-serenity">Azul Serenity</span> (reservado às Madrinhas).
+                    </div>
+                    
+                    <h4 style="font-size: 0.9rem; margin-top: 1rem; color: var(--gold); border-bottom: 1px solid #ccc; padding-bottom: 5px;">Reverência e Ordem</h4>
+                    
+                    <div style="margin-top: 0.8rem;">
+                        <i class="fas fa-mobile-alt" style="color: var(--gold); width: 20px;"></i>
+                        Celulares em modo silencioso.
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <i class="fas fa-child" style="color: var(--gold); width: 20px;"></i>
+                        Zelo pelo comportamento das crianças.
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <i class="fas fa-chair" style="color: var(--gold); width: 20px;"></i>
+                        Evitar circulação durante a cerimônia.
+                    </div>
                 </div>
             </div>
         </section>
 
-    </div>
+        <!-- Página 7: Lista de Presentes -->
+        <section class="page" id="page7" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPqr8xTnhYTfbsTSgc_dtcnhYYf_9JPUWj07Ujd3ajZQ1zebIxhK3xpcQzOGlltZ4mx7X55nGS4vm4J2kQjkva6LDW84Y3ju6Fnsmn33N5ZnbVdyfpLeqM0XYPvh6SaU6_1qP6c4ZNI7nx4kdb1QcJ0LQ=w576-h384-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <i class="fas fa-gift" style="font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem;"></i>
+                <h3>Lista de Presentes</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">
+                    Sua presença é nossa maior honra. Se desejar abençoar nosso lar, aqui estão nossas sugestões:
+                </p>
+
+                <!-- Accordion Start -->
+                <div class="accordion">
+                    <!-- Cozinha -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-utensils"></i> Cozinha</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Triturador/Processador, Jogo de vasilhas, Garrafa de Café, Jarra de água, Jarra de suco com copos, Panela de Pressão, Frigideiras, Copos plástico, Copos de vidro, Jogo de Taças, Jogo de Xícara, Jogo de talher, Jogo de facas, Jogo de Prato, Escorredor de arroz, Escorredor de macarrão, Escorredor de louças, Tábua de corte, Travessas/marinex, Porta temperos, Porta queijo/presunto, Potes herméticos, Formas/Assadeiras, Pano de prato, Pano de mesa, Tapetes, Jogo de Panelas alumínio (P/M/G), Jogo de Panelas antiaderente (P/M/G), Fruteira, Kit colheres de silicone, Amassador de Batata, Ralador, Espátula/Pegadores, Abridor.</p>
+                        </div>
+                    </div>
+
+                    <!-- Eletrodomésticos -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-plug"></i> Eletrodomésticos</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Airfryer, Sanduicheira, Liquidificador, Panela Elétrica.</p>
+                        </div>
+                    </div>
+
+                    <!-- Quarto -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-bed"></i> Quarto</span>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Jogo de Colcha de cama completo, Travesseiros, Cortina, Lençóis, Toalhas de banho, Toalhas de rosto, Edredom, Tapetes.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion End -->
+            </div>
+        </section>
+
+        <!-- Página 8: Final -->
+        <section class="page" id="page8" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPVMD1qDJ56drxVYPfCDXrcEgPZd6EMxOBtnBl0OV_syDCqsNEG8iMJw4m8pW0tRAmJoIA0eki_8C6wB4cNGyBHlS2WacwKw7Vv3AyD_Cv-VVh3eyXik7luWHYnOn_dkwieOI3MPudPmlOxgIUCuVBxiw=w547-h365-s-no-gm?authuser=0');">
+            <div class="particles"></div>
+            <div class="glass-card">
+                <i class="fas fa-heart" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; animation: pulse 2s infinite;"></i>
+                <h2>Com Amor</h2>
+                <div class="divider"></div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    Agora que você tem todos os detalhes, aguardamos por você. Estamos preparando sua recepção com todo carinho.
+                </p>
+                
+                <a href="https://api.whatsapp.com/send?text=Ol%C3%A1%2C%20Ronaldo%20e%20Vit%C3%B3ria!%20Recebi%20o%20convite%20de%20voc%C3%AAs.%20Que%20alegria!" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Abrir WhatsApp
+                </a>
+            </div>
+            
+            <footer style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 0.7rem; opacity: 0.8; z-index: 2;">
+                Ronaldo & Vitória - 2025
+            </footer>
+        </section>
+
+    </main>
 
     <script>
-        // --- 1. Animação de Abertura (Envelope) ---
-        function openInvitation() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.transform = 'translateY(-100%)';
-            
-            // Inicia a música ou sons se houver (opcional)
-            // Aguarda um pouco para revelar a primeira animação
+        // --- Animação de Entrada (Envelope) ---
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                checkScroll();
-            }, 800);
-        }
+                document.body.classList.add('envelope-open');
+                // Remove o overlay do DOM após a animação para permitir interação
+                setTimeout(() => {
+                    document.getElementById('envelope-overlay').style.display = 'none';
+                    // Iniciar observador de animações após abrir envelope
+                    startObservers();
+                }, 2000);
+            }, 500);
+        });
 
-        // --- 2. Lógica do WhatsApp ---
-        function openWhatsApp() {
-            const message = "Queridos Noivos,%0A%0ARecebemos com grande alegria e honra o convite para testemunhar esta nova aliança firmada em Deus. Agradecemos a consideração e a oportunidade de nos alegrarmos convosco. Já estamos ansiosos pelos detalhes!";
-            // Abre o link genérico que força a escolha do contato no app
-            window.open(`https://wa.me/?text=${message}`, '_blank');
-        }
+        // --- Lógica de Scroll e Seta ---
+        const scrollContainer = document.getElementById('main-scroller');
+        const arrow = document.getElementById('scroll-arrow');
+        const totalHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
 
-        // --- 3. Sistema de Animação ao Rolar (Scroll Animation & Hint) ---
-        const container = document.getElementById('main-container');
-        const sections = document.querySelectorAll('section');
-        const scrollArrow = document.getElementById('scroll-arrow');
+        scrollContainer.addEventListener('scroll', () => {
+            // Verifica se chegou perto do fim (com margem de erro)
+            if (scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - 50) {
+                arrow.classList.add('hidden');
+            } else {
+                arrow.classList.remove('hidden');
+            }
+        });
 
-        function checkScroll() {
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                const element = section.querySelector('.reveal-element');
-
-                // Se a seção está visível (focada)
-                if (rect.top >= -100 && rect.top <= window.innerHeight / 2) {
-                    if (element) {
-                        element.classList.add('active');
-                    }
-
-                    // Lógica para esconder a seta na última página
-                    if (index === sections.length - 1) {
-                        scrollArrow.classList.add('hidden');
-                    } else {
-                        scrollArrow.classList.remove('hidden');
-                    }
-                } else {
-                    // Opcional: remover a classe para reanimar quando voltar
-                    // if (element) element.classList.remove('active');
-                }
+        function scrollNext() {
+            scrollContainer.scrollBy({
+                top: window.innerHeight,
+                behavior: 'smooth'
             });
         }
 
-        // Adiciona listener ao scroll
-        container.addEventListener('scroll', checkScroll);
-        
-        // Executa uma vez no carregamento para garantir
-        window.onload = () => {
-             // Cria as partículas dinamicamente
-            createParticles();
-        };
+        // --- Intersection Observer para Fade-In Up ---
+        function startObservers() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target.querySelector('.glass-card');
+                        if (card) {
+                            card.classList.add('animate-in');
+                        }
+                    }
+                });
+            }, { threshold: 0.3 }); // Aciona quando 30% da página está visível
 
-        // --- 4. Gerador de Partículas Leves ---
-        function createParticles() {
-            const particleContainers = document.querySelectorAll('.particles');
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // --- Countdown Timer ---
+        function updateCountdown() {
+            const weddingDate = new Date('December 19, 2025 19:30:00').getTime();
+            const now = new Date().getTime();
+            const gap = weddingDate - now;
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const d = Math.floor(gap / day);
+            const h = Math.floor((gap % day) / hour);
+            const m = Math.floor((gap % hour) / minute);
+            const s = Math.floor((gap % minute) / second);
+
+            document.getElementById('countdown').innerHTML = `
+                <div class="time-box"><span class="time-value">${d}</span><span class="time-label">Dias</span></div>
+                <div class="time-box"><span class="time-value">${h}</span><span class="time-label">Horas</span></div>
+                <div class="time-box"><span class="time-value">${m}</span><span class="time-label">Min</span></div>
+                <div class="time-box"><span class="time-value">${s}</span><span class="time-label">Seg</span></div>
+            `;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- Accordion Logic ---
+        function toggleAccordion(element) {
+            // Fecha todos os outros primeiro (opcional, para visual mais limpo)
+            const allContents = document.querySelectorAll('.accordion-content');
+            const allItems = document.querySelectorAll('.accordion-item');
             
-            particleContainers.forEach(container => {
-                const particleCount = 15; // Quantidade leve
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    
-                    // Posição aleatória
-                    const x = Math.random() * 100;
-                    const delay = Math.random() * 5;
-                    const duration = 5 + Math.random() * 10;
-                    
-                    particle.style.left = `${x}%`;
-                    particle.style.animationDelay = `${delay}s`;
-                    particle.style.animationDuration = `${duration}s`;
-                    
-                    container.appendChild(particle);
-                }
-            });
+            // Pega o conteúdo atual
+            const content = element.nextElementSibling;
+            const parent = element.parentElement;
+            
+            // Se já estiver aberto, fecha. Se não, abre este e fecha os outros.
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                parent.classList.remove('active');
+            } else {
+                // Fechar outros
+                allContents.forEach(c => c.style.maxHeight = null);
+                allItems.forEach(i => i.classList.remove('active'));
+                
+                // Abrir atual
+                content.style.maxHeight = content.scrollHeight + "px";
+                parent.classList.add('active');
+            }
         }
-
     </script>
 </body>
 </html>
